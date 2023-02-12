@@ -1,3 +1,4 @@
+
 ## GUIDE
 
 
@@ -11,6 +12,10 @@
 ```http
   cd ZINFY
 ```
+
 ```http
   python zinfy.py
 ```
+For macos:
+```http
+  python3 zinfy.py
