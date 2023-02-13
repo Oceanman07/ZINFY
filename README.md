@@ -1,5 +1,5 @@
 
-## USAGE
+## Usage
 
 
 #### Download
