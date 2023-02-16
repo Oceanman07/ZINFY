@@ -1103,6 +1103,7 @@ def ventura_shortcut(e):
    # hide all buttons and only show background with bar_play
    if ventura == True:
       # hide all buttons
+      bar_play.place(y=10000)
       frame_song_box_scroll.place(y=10000)
       control_frame.place(y=10000)
       scale_volume.place(y=10000)
@@ -1114,6 +1115,7 @@ def ventura_shortcut(e):
 
    else:
       # return the original place of buttons 
+      bar_play.place(x=60, y=60)
       frame_song_box_scroll.place(x=63, y=130)
       control_frame.place(x=226.2, y=470)
       scale_volume.place(x=764, y=150)
@@ -1122,6 +1124,32 @@ def ventura_shortcut(e):
       label_under_slider.place(x=255, y=513)
       scale_slider.place(x=269, y=525)
       button_random_song.place(x=170, y=474)
+
+# create a popup screen
+def open_popup():
+   global tab
+
+   tab = customtkinter.CTkToplevel(root)
+   tab.title("Load mp3 and png")
+   tab.geometry("400x200")
+   tab.resizable(False, False)
+   Label(tab, text="New tab", font=("Roboto", 19))
+
+   # type text here 
+   global text
+   text = customtkinter.CTkTextbox(tab, width=380, height=30)
+   text.pack()
+   text.place(x=10, y=5)
+
+   # button 
+   button_get_text = customtkinter.CTkButton(tab, text="Submit", width=30, command=load_video)
+   button_get_text.pack()
+   button_get_text.place(x=40, y=35)
+
+
+   # shortcut 
+   tab.bind("<Command-w>", close_popup)
+   tab.bind("<Return>", load_video_shortcut)
 
 def close_popup(e):
    tab.destroy()
@@ -1166,12 +1194,17 @@ canvas.pack()
 background_label = customtkinter.CTkLabel(root, image="", text="")
 background_label.place(x=0, y=0, relheight=1, relwidth=1)   
 
+# notebook = ttk.Notebook(root)
+# notebook.pack(pady=10, expand=True)
+
 frame_song_box_scroll = customtkinter.CTkFrame(root, fg_color="transparent", width=400, height=380)
 frame_song_box_scroll.pack(fill=BOTH, expand=True)
 frame_song_box_scroll.place(x=63, y=130)
 # frame_song_box_scroll.place(x=63, y=830)
 
 # song box #FBFCFC
+# song_box = Listbox(frame_song_box_scroll, bg="#FBFCFC", fg="#212F3D", width=52, font=("Kozuka Gothic Pro M", 20), selectbackground="black", selectforeground="white", borderwidth=0, \
+#    relief="flat", highlightcolor="#FBFCFC", )
 song_box = Listbox(frame_song_box_scroll, bg="#FBFCFC", fg="#212F3D", width=52, font=("Kozuka Gothic Pro M", 20), selectbackground="#CACFD2", selectforeground="#F4F6F7", borderwidth=0, \
    relief="flat", highlightcolor="black", )
 song_box.pack(side=LEFT, fill=BOTH)
@@ -1238,6 +1271,11 @@ button_random_song = customtkinter.CTkButton(root, text="", image=random_off, co
 button_random_song.pack()
 button_random_song.place(x=170, y=474)
 
+# button_popup = customtkinter.CTkButton(root, text="popup", command=open_popup)
+# button_popup.pack()
+# button_popup.place(x=170, y=400)
+
+
 '''
 button_insert_song = customtkinter.CTkButton(root, text="Add song", font=("Kozuka Gothic Pro M", 15), command=insert_song, text_color=text_color) #, fg="#4D5656"
 button_insert_song.pack()
@@ -1255,6 +1293,10 @@ button_delete = customtkinter.CTkButton(root, text="Delete", font=("Kozuka Gothi
 button_delete.pack()
 button_delete.place(x=-7, y=539)
 '''
+
+# button_icon_speaker = Button(root, image=speaker_img, relief="flat")
+# button_icon_speaker.pack()
+# button_icon_speaker.place(x=755, y=140)
 
 # Scale 
 # Control volume
