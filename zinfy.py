@@ -1177,7 +1177,6 @@ pause_img = customtkinter.CTkImage(light_image=Image.open("images/pause.png"), s
 stop_img = customtkinter.CTkImage(light_image=Image.open("images/stop.png"), size=(30,30)) 
 next_song_img = customtkinter.CTkImage(light_image=Image.open("images/next.png"), size=(30,30))
 previous_img = customtkinter.CTkImage(light_image=Image.open("images/previous.png"), size=(30,30))
-ventura_img = customtkinter.CTkImage(light_image = Image.open("images/ventura.png"), size=(30,30))
 auto_on = customtkinter.CTkImage(light_image = Image.open("images/autoplay_on.png"), size=(25,25))
 auto_off = customtkinter.CTkImage(light_image = Image.open("images/autoplay_off.png"), size=(25,25))
 rewind_on = customtkinter.CTkImage(light_image = Image.open("images/rewind_on.png"), size=(25,25))
