@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter.ttk import Notebook
+from tkmacosx import Button
 import random, pygame, time, webbrowser, os, time, customtkinter, tkinter, subprocess
 from mutagen.mp3 import MP3
 from datetime import date
@@ -16,8 +17,18 @@ customtkinter.deactivate_automatic_dpi_awareness()
 
 root = customtkinter.CTk()
 root.title("ZINFY")
-root.geometry("800x600")
 root.resizable(False, False)
+
+# get the screen width and height
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
+# calculate the x and y coordinates of the top-left corner of the window
+x = int((screen_width - 900) / 2)  # 900 is the width of the window
+y = int((screen_height - 700) / 2)  # 700 is the height of the window
+
+# set the size and position of the window
+root.geometry(f"800x600+{x}+{y}")
 
 style = ttk.Style()
 style.theme_use("aqua")
@@ -106,9 +117,8 @@ def play_time():
    current_song = song_box.curselection()
    song = song_box.get(current_song)
    
-   song = f"audio/{song}.mp3"
-
    # get length of song 
+   song = f"audio/{song}.mp3"
    song = MP3(song)
    global length_song
    length_song = song.info.length
@@ -117,9 +127,9 @@ def play_time():
    converted_current_song = time.strftime("%M:%S", time.gmtime(length_song))
 
    # show time process 
-   # label_bottom.configure(text=f"{converted_current_time} of {converted_current_song}")
    label_process_left.configure(text=converted_current_time)
    label_process_right.configure(text=converted_current_song)
+   # label_bottom.configure(text=f"{converted_current_time} of {converted_current_song}")
 
    scale_slider.set(current_time)
    # process_bar.set(current_time)
@@ -934,6 +944,7 @@ def delete_song_shortcut(e): # shortcut
 def delete_songs():
    song_box.delete(0, END)
    pygame.mixer.music.stop()
+
 def delete_songs_shortcut(e): # shortcut
    song_box.delete(0, END)
    pygame.mixer.music.stop()
@@ -957,7 +968,7 @@ def set_volume(value):
    pygame.mixer.music.set_volume(volume)
 
 def slider(x):
-   converted_current_song = time.strftime("%M:%S", time.gmtime(length_song))
+   # converted_current_song = time.strftime("%M:%S", time.gmtime(length_song))
    current_time = scale_slider.get()
    # print(current_time)
    # print(length_song)
@@ -1112,32 +1123,6 @@ def ventura_shortcut(e):
       scale_slider.place(x=269, y=525)
       button_random_song.place(x=170, y=474)
 
-# create a popup screen
-def open_popup():
-   global tab
-
-   tab = customtkinter.CTkToplevel(root)
-   tab.title("Load mp3 and png")
-   tab.geometry("400x200")
-   tab.resizable(False, False)
-   Label(tab, text="New tab", font=("Roboto", 19))
-
-   # type text here 
-   global text
-   text = customtkinter.CTkTextbox(tab, width=380, height=30)
-   text.pack()
-   text.place(x=10, y=5)
-
-   # button 
-   button_get_text = customtkinter.CTkButton(tab, text="Submit", width=30, command=load_video)
-   button_get_text.pack()
-   button_get_text.place(x=40, y=35)
-
-
-   # shortcut 
-   tab.bind("<Command-w>", close_popup)
-   tab.bind("<Return>", load_video_shortcut)
-
 def close_popup(e):
    tab.destroy()
 
@@ -1164,6 +1149,7 @@ pause_img = customtkinter.CTkImage(light_image=Image.open("images/pause.png"), s
 stop_img = customtkinter.CTkImage(light_image=Image.open("images/stop.png"), size=(30,30)) 
 next_song_img = customtkinter.CTkImage(light_image=Image.open("images/next.png"), size=(30,30))
 previous_img = customtkinter.CTkImage(light_image=Image.open("images/previous.png"), size=(30,30))
+ventura_img = customtkinter.CTkImage(light_image = Image.open("images/ventura.png"), size=(30,30))
 auto_on = customtkinter.CTkImage(light_image = Image.open("images/autoplay_on.png"), size=(25,25))
 auto_off = customtkinter.CTkImage(light_image = Image.open("images/autoplay_off.png"), size=(25,25))
 rewind_on = customtkinter.CTkImage(light_image = Image.open("images/rewind_on.png"), size=(25,25))
@@ -1176,12 +1162,9 @@ canvas = Canvas(root, bg="#FBFCFC", height=600, width=800)
 canvas.pack()
 
 # background_img = customtkinter.CTkImage(light_image=Image.open("images/background.png"),  size=(800,600))
-background_img = customtkinter.CTkImage(light_image=Image.open("background/background.png"),  size=(800,600))
-background_label = customtkinter.CTkLabel(root, image=background_img, text="")
+# background_img = customtkinter.CTkImage(light_image=Image.open("images/ventura.png"),  size=(800,600))
+background_label = customtkinter.CTkLabel(root, image="", text="")
 background_label.place(x=0, y=0, relheight=1, relwidth=1)   
-
-# notebook = ttk.Notebook(root)
-# notebook.pack(pady=10, expand=True)
 
 frame_song_box_scroll = customtkinter.CTkFrame(root, fg_color="transparent", width=400, height=380)
 frame_song_box_scroll.pack(fill=BOTH, expand=True)
@@ -1189,8 +1172,6 @@ frame_song_box_scroll.place(x=63, y=130)
 # frame_song_box_scroll.place(x=63, y=830)
 
 # song box #FBFCFC
-# song_box = Listbox(frame_song_box_scroll, bg="#FBFCFC", fg="#212F3D", width=52, font=("Kozuka Gothic Pro M", 20), selectbackground="black", selectforeground="white", borderwidth=0, \
-#    relief="flat", highlightcolor="#FBFCFC", )
 song_box = Listbox(frame_song_box_scroll, bg="#FBFCFC", fg="#212F3D", width=52, font=("Kozuka Gothic Pro M", 20), selectbackground="#CACFD2", selectforeground="#F4F6F7", borderwidth=0, \
    relief="flat", highlightcolor="black", )
 song_box.pack(side=LEFT, fill=BOTH)
@@ -1227,7 +1208,7 @@ for song in range(200):
 bar_play = customtkinter.CTkButton(root, text="Let choose a song and play", font=("roboto", 23), text_color="#FBFCFC",\
    command=hide_unhide_song_box, border_width=0,)
 bar_play.pack()
-bar_play.place(x=63, y=60)
+bar_play.place(x=60, y=60)
 
 # frame 
 control_frame = Frame(root, bg="#FBFCFC")
@@ -1257,11 +1238,6 @@ button_random_song = customtkinter.CTkButton(root, text="", image=random_off, co
 button_random_song.pack()
 button_random_song.place(x=170, y=474)
 
-# button_popup = customtkinter.CTkButton(root, text="popup", command=open_popup)
-# button_popup.pack()
-# button_popup.place(x=170, y=400)
-
-
 '''
 button_insert_song = customtkinter.CTkButton(root, text="Add song", font=("Kozuka Gothic Pro M", 15), command=insert_song, text_color=text_color) #, fg="#4D5656"
 button_insert_song.pack()
@@ -1279,10 +1255,6 @@ button_delete = customtkinter.CTkButton(root, text="Delete", font=("Kozuka Gothi
 button_delete.pack()
 button_delete.place(x=-7, y=539)
 '''
-
-# button_icon_speaker = Button(root, image=speaker_img, relief="flat")
-# button_icon_speaker.pack()
-# button_icon_speaker.place(x=755, y=140)
 
 # Scale 
 # Control volume
