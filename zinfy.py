@@ -42,27 +42,64 @@ def insert_song_short(e):
    insert_song = insert_song + 1
    # print(f"insert song {insert_song}")
 
+   non_repeat_insert = []
    # insert random 200 songs
    for song in range(200):
       # get list_music from listmusic.py 
       song = random.choice(list_music)
+
+      # reduce the repeat of songs 
+      if song in non_repeat_insert: 
+         song = random.choice(list_music) 
+
+         if song in non_repeat_insert:
+               song = random.choice(list_music) 
+               if song in non_repeat_insert:
+                  song = random.choice(list_music) 
+               else: ...
+      else:
+         pass
+
+      # append the song to list 
+      non_repeat_insert.append(song)
+
       song = song.replace("audio/", "")
       song = song.replace(".mp3", "")
       # insert name song on song box 
       song_box.insert(0, song)
-   
+
 def insert_song():
    global insert_song
    insert_song = insert_song + 1
-   
-   # insert random 200 songs 
+   # print(f"insert song {insert_song}")
+
+   non_repeat_insert = []
+   # insert random 200 songs
    for song in range(200):
-      # get list_music from listmusic.py
+      # get list_music from listmusic.py 
       song = random.choice(list_music)
+
+      # reduce the repeat of songs 
+      if song in non_repeat_insert: 
+         song = random.choice(list_music) 
+
+         if song in non_repeat_insert:
+               song = random.choice(list_music) 
+               if song in non_repeat_insert:
+                  song = random.choice(list_music) 
+               else: ...
+      else:
+         pass
+
+      # append the song to list 
+      non_repeat_insert.append(song)
+
       song = song.replace("audio/", "")
       song = song.replace(".mp3", "")
       # insert name song on song box 
       song_box.insert(0, song)
+   
+
    
 # play music 
 def play_song(): 
@@ -675,7 +712,6 @@ def previous_song():
 
       if insert_song > 1:
          the_last_song = the_last_song + (insert_song-1)
-      # print(the_last_song)
 
       # clear highlight the song at the end 
       song_box.selection_clear(0, END)
@@ -1125,43 +1161,6 @@ def ventura_shortcut(e):
       scale_slider.place(x=269, y=525)
       button_random_song.place(x=170, y=474)
 
-# create a popup screen
-def open_popup():
-   global tab
-
-   tab = customtkinter.CTkToplevel(root)
-   tab.title("Load mp3 and png")
-   tab.geometry("400x200")
-   tab.resizable(False, False)
-   Label(tab, text="New tab", font=("Roboto", 19))
-
-   # type text here 
-   global text
-   text = customtkinter.CTkTextbox(tab, width=380, height=30)
-   text.pack()
-   text.place(x=10, y=5)
-
-   # button 
-   button_get_text = customtkinter.CTkButton(tab, text="Submit", width=30, command=load_video)
-   button_get_text.pack()
-   button_get_text.place(x=40, y=35)
-
-
-   # shortcut 
-   tab.bind("<Command-w>", close_popup)
-   tab.bind("<Return>", load_video_shortcut)
-
-def close_popup(e):
-   tab.destroy()
-
-def load_video():
-   txt = text.get("1.0", "end")
-   print(txt)
-
-def load_video_shortcut(e):
-   txt = text.get("1.0", "end")
-   print(txt)
-
 # define variable
 auto_play = True
 repeat_song = False 
@@ -1188,13 +1187,8 @@ random_off = customtkinter.CTkImage(light_image=Image.open("images/random_off.pn
 canvas = Canvas(root, bg="#FBFCFC", height=600, width=800)
 canvas.pack()
 
-# background_img = customtkinter.CTkImage(light_image=Image.open("images/background.png"),  size=(800,600))
-# background_img = customtkinter.CTkImage(light_image=Image.open("images/ventura.png"),  size=(800,600))
 background_label = customtkinter.CTkLabel(root, image="", text="")
 background_label.place(x=0, y=0, relheight=1, relwidth=1)   
-
-# notebook = ttk.Notebook(root)
-# notebook.pack(pady=10, expand=True)
 
 frame_song_box_scroll = customtkinter.CTkFrame(root, fg_color="transparent", width=400, height=380)
 frame_song_box_scroll.pack(fill=BOTH, expand=True)
@@ -1202,8 +1196,6 @@ frame_song_box_scroll.place(x=63, y=130)
 # frame_song_box_scroll.place(x=63, y=830)
 
 # song box #FBFCFC
-# song_box = Listbox(frame_song_box_scroll, bg="#FBFCFC", fg="#212F3D", width=52, font=("Kozuka Gothic Pro M", 20), selectbackground="black", selectforeground="white", borderwidth=0, \
-#    relief="flat", highlightcolor="#FBFCFC", )
 song_box = Listbox(frame_song_box_scroll, bg="#FBFCFC", fg="#212F3D", width=52, font=("Kozuka Gothic Pro M", 20), selectbackground="#CACFD2", selectforeground="#F4F6F7", borderwidth=0, \
    relief="flat", highlightcolor="black", )
 song_box.pack(side=LEFT, fill=BOTH)
@@ -1217,10 +1209,29 @@ scroll_bar.pack(side=RIGHT, fill=Y)
 
 song_box.config(yscrollcommand=scroll_bar.set)
 
-# print song on song box 
-for song in range(200):
+# insert song on song box 
+non_repeat_song = []
+
+for song in range(200):   
    # get list_music from listmusic.py 
    song = random.choice(list_music)
+
+   # if the song is in list, choose song again 
+   # make the repeat of songs is reduced
+   if song in non_repeat_song: 
+      song = random.choice(list_music) 
+
+      if song in non_repeat_song:
+            song = random.choice(list_music) 
+            if song in non_repeat_song:
+               song = random.choice(list_music) 
+            else: ...
+      else:
+         pass
+
+   # append song into list non repeat 
+   non_repeat_song.append(song)
+
    song = song.replace("audio/", "")
    song = song.replace(".mp3", "")
 
@@ -1232,8 +1243,6 @@ for song in range(200):
    # highlight the first song name 
    song_box.activate(7)
    song_box.selection_set(7, last=None)
-
-# notebook.add(frame_song_box_scroll, text="All")
 
 # show what song that is being play 
 
@@ -1270,34 +1279,6 @@ button_random_song = customtkinter.CTkButton(root, text="", image=random_off, co
 button_random_song.pack()
 button_random_song.place(x=170, y=474)
 
-# button_popup = customtkinter.CTkButton(root, text="popup", command=open_popup)
-# button_popup.pack()
-# button_popup.place(x=170, y=400)
-
-
-'''
-button_insert_song = customtkinter.CTkButton(root, text="Add song", font=("Kozuka Gothic Pro M", 15), command=insert_song, text_color=text_color) #, fg="#4D5656"
-button_insert_song.pack()
-button_insert_song.place(x=-7, y=440)
-
-button_sleep = customtkinter.CTkButton(root, text="Sleep: off", font=("Kozuka Gothic Pro M", 15), command=sleep, text_color=text_color)
-button_sleep.pack()
-button_sleep.place(x=-7, y=473)
-
-button_edit = customtkinter.CTkButton(root, text="Setting", font=("Kozuka Gothic Pro M", 15), command=edit_button, text_color=text_color)
-button_edit.pack()
-button_edit.place(x=-7, y=506)
-
-button_delete = customtkinter.CTkButton(root, text="Delete", font=("Kozuka Gothic Pro M", 15), command=delete_song)
-button_delete.pack()
-button_delete.place(x=-7, y=539)
-'''
-
-# button_icon_speaker = Button(root, image=speaker_img, relief="flat")
-# button_icon_speaker.pack()
-# button_icon_speaker.place(x=755, y=140)
-
-# Scale 
 # Control volume
 scale_volume = customtkinter.CTkSlider(root, from_=0, to=100, command=set_volume, \
    cursor="hand2", state=NORMAL, orientation=VERTICAL, width=22)
@@ -1318,18 +1299,6 @@ scale_slider = Scale(root, from_=0, to=100, command=slider, state=NORMAL, showva
 scale_slider.set(0)
 scale_slider.pack()
 scale_slider.place(x=269, y=525)
-
-# scale_slider = customtkinter.CTkSlider(root, from_=0, to=100, command=slider, state=NORMAL, 
-#    width=360, orientation=HORIZONTAL, 
-# ) # bg="#E5E7E9"
-# scale_slider.set(0)
-# scale_slider.pack()
-# scale_slider.place(x=269, y=525)
-
-# process_bar = customtkinter.CTkProgressBar(root)
-# process_bar.set(0)
-# process_bar.pack()
-# process_bar.place(x=269, y=550)
 
 # process bar 
 label_bottom = customtkinter.CTkLabel(root, text="", fg_color="#E5E7E9", text_color="#212F3D")
