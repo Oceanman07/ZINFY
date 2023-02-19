@@ -2,8 +2,6 @@ from random import randint
 from tkinter import * 
 from tkinter import ttk
 from tkinter import filedialog
-from tkinter.ttk import Notebook
-from tkmacosx import Button
 import random, pygame, time, webbrowser, os, time, customtkinter, tkinter, subprocess
 from mutagen.mp3 import MP3
 from datetime import date
@@ -141,9 +139,6 @@ def play_song():
    scale_slider.configure(to=slider_postition)
    scale_slider.set(0)
 
-   # process_bar.configure(to=slider_postition)
-   # process_bar.set(0)
-
 # process bar 
 def play_time():
    # convert time play to current time
@@ -210,9 +205,6 @@ def play_song_shortcut(e):
    scale_slider.configure(to=slider_postition)
    scale_slider.set(0)
 
-   # process_bar.configure(to=slider_postition)
-   # process_bar.set(0)
-
 # play the next song 
 def next_song():
    if random_mode == True:
@@ -271,7 +263,6 @@ def next_song():
          scale_slider.set(0)
       else:
          # if not call play_song function to play that song again
-         # play_song()
 
          # get the current song
          next_song = song_box.curselection()
