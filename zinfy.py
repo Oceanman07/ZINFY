@@ -97,8 +97,6 @@ def insert_song():
       # insert name song on song box 
       song_box.insert(0, song)
    
-
-   
 # play music 
 def play_song(): 
    # get the first song that is highlighted 
